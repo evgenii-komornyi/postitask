@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
-import { removeBrand } from '../../redux/entity/entity.reducer';
+import { removeEntity } from '../../redux/entity/entity.reducer';
 import { setIsModalOpen } from '../../redux/modal/modal.reducer';
 
 import {
@@ -26,7 +26,7 @@ import Product from '../product/product.component';
 
 const Brand = ({
     brands,
-    removeBrand,
+    removeEntity,
     brandId,
     categoryId,
     classes,
@@ -70,7 +70,14 @@ const Brand = ({
                         <IconButton
                             edge="end"
                             aria-label="delete"
-                            onClick={() => removeBrand({ categoryId, brandId })}
+                            onClick={() =>
+                                removeEntity({
+                                    type: 'brand',
+                                    productId: '',
+                                    brandId,
+                                    categoryId,
+                                })
+                            }
                         >
                             <DeleteForever />
                         </IconButton>
@@ -105,7 +112,7 @@ const mapStateToProps = ({
 
 const mapDispatchToProps = dispatch => {
     return {
-        removeBrand: obj => dispatch(removeBrand(obj)),
+        removeEntity: obj => dispatch(removeEntity(obj)),
         setIsModalOpen: obj => dispatch(setIsModalOpen(obj)),
     };
 };

@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { removeProduct } from '../../redux/entity/entity.reducer';
+import { removeEntity } from '../../redux/entity/entity.reducer';
 
 import {
     ListItem,
@@ -11,7 +11,7 @@ import {
 } from '@material-ui/core';
 import { DeleteForever } from '@material-ui/icons';
 
-const Product = ({ products, removeProduct, productId, brandId, classes }) => {
+const Product = ({ products, removeEntity, productId, brandId, classes }) => {
     return (
         <ListItem key={productId} button className={classes.level2}>
             <ListItemText primary={products[productId].name} />
@@ -20,7 +20,14 @@ const Product = ({ products, removeProduct, productId, brandId, classes }) => {
                     <IconButton
                         edge="end"
                         aria-label="delete"
-                        onClick={() => removeProduct({ brandId, productId })}
+                        onClick={() =>
+                            removeEntity({
+                                type: 'product',
+                                productId,
+                                brandId,
+                                categoryId: '',
+                            })
+                        }
                     >
                         <DeleteForever />
                     </IconButton>
@@ -40,7 +47,7 @@ const mapStateToProps = ({
 
 const mapDispatchToProps = dispatch => {
     return {
-        removeProduct: obj => dispatch(removeProduct(obj)),
+        removeEntity: obj => dispatch(removeEntity(obj)),
     };
 };
 export default connect(mapStateToProps, mapDispatchToProps)(Product);
